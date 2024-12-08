@@ -11,6 +11,7 @@ public class PrintitApplication {
 		System.out.println("Hello this is Inventory Project 1");
 		System.out.println("Hello this is Inventory Project 2");
 		System.out.println("Hello this is Inventory Project 3");
+		System.out.println("Hello this is Inventory Project 4");
 	}
 
 }
