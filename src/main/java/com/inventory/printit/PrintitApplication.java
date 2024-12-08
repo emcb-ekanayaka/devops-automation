@@ -8,7 +8,7 @@ public class PrintitApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrintitApplication.class, args);
-		System.out.println("Hello this is Inventory Project");
+		System.out.println("Hello this is Inventory Project 2");
 	}
 
 }
