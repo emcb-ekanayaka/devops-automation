@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class RequestRegistryDto {
 
-
     private String companyName;
     private String comAddressOne;
     private String comAddressTwo;
     private String comAddressThree;
     private String brNumber;
+
+    private String warehouseName;
+    private String warehouseLocation;
 }
