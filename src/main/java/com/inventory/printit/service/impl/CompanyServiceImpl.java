@@ -138,7 +138,7 @@ public class CompanyServiceImpl implements CompanyService{
             companyRepo.delete(company.get());
             return new CommonResponseDto(201, "Company was deleted!", true, new ArrayList<>());
         } else {
-            throw new EntryNotFoundException("Can't find any Student...!");
+            throw new EntryNotFoundException("Can't find any Warehouse...!");
         }
     }
 }

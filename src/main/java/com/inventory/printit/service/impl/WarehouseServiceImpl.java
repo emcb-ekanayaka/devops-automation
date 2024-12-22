@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -60,6 +61,17 @@ public class WarehouseServiceImpl implements WarehouseService {
             return new CommonResponseDto(201, "Warehouse  Updated!", warehouseObj.getWarehouseCode(), new ArrayList<>());
         }catch (Exception e){
             throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+        }
+    }
+
+    @Override
+    public CommonResponseDto removeWarehouse(String warehouseId) {
+        Optional<Warehouse> warehouse = warehouseRepo.findById(warehouseId);
+        if (warehouse.isPresent()) {
+            warehouseRepo.delete(warehouse.get());
+            return new CommonResponseDto(201, "Warehouse was deleted!", true, new ArrayList<>());
+        } else {
+            throw new EntryNotFoundException("Can't find any Warehouse...!");
         }
     }
 }
