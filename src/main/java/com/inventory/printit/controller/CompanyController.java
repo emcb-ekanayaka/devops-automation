@@ -56,4 +56,17 @@ public class CompanyController {
                 HttpStatus.CREATED
         );
     }
+
+    @DeleteMapping("{companyId}")
+    public ResponseEntity<StandardResponse> deleteCompany(@PathVariable String companyId){
+        CommonResponseDto responseData = companyService.removeCompany(companyId);
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        responseData.getCode(),
+                        responseData.getMessage(),
+                        responseData.getData()
+                ),
+                HttpStatus.CREATED
+        );
+    }
 }

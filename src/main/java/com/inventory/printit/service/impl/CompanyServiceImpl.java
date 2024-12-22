@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -99,6 +100,17 @@ public class CompanyServiceImpl implements CompanyService{
             return new CommonResponseDto(201, "Company  Updated!", companyObj.getCompanyCode(), new ArrayList<>());
         }catch (Exception e){
             throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+        }
+    }
+
+    @Override
+    public CommonResponseDto removeCompany(String companyId) {
+        Optional<Company> company = companyRepo.findById(companyId);
+        if (company.isPresent()) {
+            companyRepo.delete(company.get());
+            return new CommonResponseDto(201, "Company was deleted!", true, new ArrayList<>());
+        } else {
+            throw new EntryNotFoundException("Can't find any Student...!");
         }
     }
 }
