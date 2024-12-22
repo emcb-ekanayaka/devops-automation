@@ -3,6 +3,9 @@ package com.inventory.printit.service.impl;
 import com.inventory.printit.dto.CompanyDto;
 import com.inventory.printit.dto.requestdto.RequestRegistryDto;
 import com.inventory.printit.dto.responsedto.CommonResponseDto;
+import com.inventory.printit.dto.responsedto.CompanyResponseDto;
+import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseCompanyDto;
+import com.inventory.printit.entity.Company;
 import com.inventory.printit.exception.EntryNotFoundException;
 import com.inventory.printit.repo.CompanyRepository;
 import com.inventory.printit.service.CompanyService;
@@ -12,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -49,6 +54,34 @@ public class CompanyServiceImpl implements CompanyService{
             return new CommonResponseDto(201, "Company  saved!", companyDto.getCompanyCode(), new ArrayList<>());
         }catch (Exception e){
             throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+        }
+    }
+
+    @Override
+    public PaginatedResponseCompanyDto allCompany() throws SQLException {
+        try {
+            List<Company> allCompaniesForProvidedId = companyRepo.findAll();
+            List<CompanyResponseDto> companyResponseDto = new ArrayList<>();
+
+            for (Company c : allCompaniesForProvidedId) {
+                companyResponseDto.add(
+                        new CompanyResponseDto(
+                               c.getId(),
+                                c.getCompanyCode(),
+                                c.getCompanyName(),
+                                c.getComAddressOne(),
+                                c.getComAddressTwo(),
+                                c.getComAddressThree(),
+                                c.getBrNumber()
+                        )
+                );
+            }
+            return new PaginatedResponseCompanyDto(
+                    companyRepo.count(),
+                    companyResponseDto
+            );
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't find any data...!");
         }
     }
 }
