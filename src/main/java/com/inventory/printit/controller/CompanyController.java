@@ -43,4 +43,17 @@ public class CompanyController {
                 HttpStatus.OK
         );
     }
+
+    @PutMapping("{companyId}")
+    public ResponseEntity<StandardResponse> updateCompany(@RequestBody RequestRegistryDto data, @PathVariable String companyId){
+        CommonResponseDto responseData = companyService.updateCompany(data,companyId);
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        responseData.getCode(),
+                        responseData.getMessage(),
+                        responseData.getData()
+                ),
+                HttpStatus.CREATED
+        );
+    }
 }

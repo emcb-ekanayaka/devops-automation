@@ -84,4 +84,21 @@ public class CompanyServiceImpl implements CompanyService{
             throw new EntryNotFoundException("Can't find any data...!");
         }
     }
+
+    @Override
+    public CommonResponseDto updateCompany(RequestRegistryDto dto, String companyId) {
+        try {
+            Company companyObj = companyRepo.getById(companyId);
+            companyObj.setCompanyName(dto.getCompanyName());
+            companyObj.setComAddressOne(dto.getComAddressOne());
+            companyObj.setComAddressTwo(dto.getComAddressTwo());
+            companyObj.setComAddressThree(dto.getComAddressThree());
+            companyObj.setBrNumber(dto.getBrNumber());
+
+            companyRepo.save(companyObj);
+            return new CommonResponseDto(201, "Company  Updated!", companyObj.getCompanyCode(), new ArrayList<>());
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+        }
+    }
 }

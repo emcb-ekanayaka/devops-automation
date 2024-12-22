@@ -9,4 +9,5 @@ import java.sql.SQLException;
 public interface CompanyService {
     CommonResponseDto saveCompany(RequestRegistryDto dto);
     PaginatedResponseCompanyDto allCompany() throws SQLException;
+    CommonResponseDto updateCompany(RequestRegistryDto dto, String companyId);
 }
