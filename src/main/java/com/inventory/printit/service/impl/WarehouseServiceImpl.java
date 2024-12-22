@@ -3,6 +3,8 @@ package com.inventory.printit.service.impl;
 import com.inventory.printit.dto.WarehouseDto;
 import com.inventory.printit.dto.requestdto.RequestRegistryDto;
 import com.inventory.printit.dto.responsedto.CommonResponseDto;
+import com.inventory.printit.entity.Company;
+import com.inventory.printit.entity.Warehouse;
 import com.inventory.printit.exception.EntryNotFoundException;
 import com.inventory.printit.repo.WarehouseRepository;
 import com.inventory.printit.service.WarehouseService;
@@ -42,6 +44,20 @@ public class WarehouseServiceImpl implements WarehouseService {
             warehouseRepo.save(warehouseMapper.dtoToWarehouseEntity(warehouseDto));
 
             return new CommonResponseDto(201, "Warehouse  saved!", warehouseDto.getWarehouseCode(), new ArrayList<>());
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+        }
+    }
+
+    @Override
+    public CommonResponseDto updateWarehouse(RequestRegistryDto dto, String warehouseId) {
+        try {
+            Warehouse warehouseObj = warehouseRepo.getById(warehouseId);
+            warehouseObj.setWarehouseName(dto.getWarehouseName());
+            warehouseObj.setWarehouseLocation(dto.getWarehouseLocation());
+
+            warehouseRepo.save(warehouseObj);
+            return new CommonResponseDto(201, "Warehouse  Updated!", warehouseObj.getWarehouseCode(), new ArrayList<>());
         }catch (Exception e){
             throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
         }

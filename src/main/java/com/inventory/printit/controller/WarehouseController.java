@@ -28,4 +28,17 @@ public class WarehouseController {
                 HttpStatus.CREATED
         );
     }
+
+    @PutMapping("{warehouseId}")
+    public ResponseEntity<StandardResponse> updateWarehouse(@RequestBody RequestRegistryDto data, @PathVariable String warehouseId){
+        CommonResponseDto responseData = warehouseService.updateWarehouse(data,warehouseId);
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        responseData.getCode(),
+                        responseData.getMessage(),
+                        responseData.getData()
+                ),
+                HttpStatus.CREATED
+        );
+    }
 }
