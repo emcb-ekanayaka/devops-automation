@@ -3,6 +3,10 @@ package com.inventory.printit.service.impl;
 import com.inventory.printit.dto.WarehouseDto;
 import com.inventory.printit.dto.requestdto.RequestRegistryDto;
 import com.inventory.printit.dto.responsedto.CommonResponseDto;
+import com.inventory.printit.dto.responsedto.CompanyResponseDto;
+import com.inventory.printit.dto.responsedto.WarehouseResponseDto;
+import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseCompanyDto;
+import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseWarehouseDto;
 import com.inventory.printit.entity.Company;
 import com.inventory.printit.entity.Warehouse;
 import com.inventory.printit.exception.EntryNotFoundException;
@@ -14,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,6 +78,31 @@ public class WarehouseServiceImpl implements WarehouseService {
             return new CommonResponseDto(201, "Warehouse was deleted!", true, new ArrayList<>());
         } else {
             throw new EntryNotFoundException("Can't find any Warehouse...!");
+        }
+    }
+
+    @Override
+    public PaginatedResponseWarehouseDto allWarehouses() throws SQLException {
+        try {
+            List<Warehouse> warehouseById = warehouseRepo.findAll();
+            List<WarehouseResponseDto> warehouseResponseDto = new ArrayList<>();
+
+            for (Warehouse w : warehouseById) {
+                warehouseResponseDto.add(
+                        new WarehouseResponseDto(
+                                w.getId(),
+                                w.getWarehouseCode(),
+                                w.getWarehouseName(),
+                                w.getWarehouseLocation()
+                        )
+                );
+            }
+            return new PaginatedResponseWarehouseDto(
+                    warehouseRepo.count(),
+                    warehouseResponseDto
+            );
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't find any data...!");
         }
     }
 }
