@@ -41,4 +41,17 @@ public class WarehouseController {
                 HttpStatus.CREATED
         );
     }
+
+    @DeleteMapping("{warehouseId}")
+    public ResponseEntity<StandardResponse> deleteCompany(@PathVariable String warehouseId){
+        CommonResponseDto responseData = warehouseService.removeWarehouse(warehouseId);
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        responseData.getCode(),
+                        responseData.getMessage(),
+                        responseData.getData()
+                ),
+                HttpStatus.CREATED
+        );
+    }
 }
