@@ -67,4 +67,15 @@ public class WarehouseController {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("{warehouseCode}")
+    public ResponseEntity<StandardResponse> getWarehouse(@PathVariable String warehouseCode)throws SQLException {
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        200,
+                        "Warehouse Details",
+                        warehouseService.warehouseById(warehouseCode)),
+                HttpStatus.OK
+        );
+    }
 }
