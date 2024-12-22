@@ -87,6 +87,34 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
+    public PaginatedResponseCompanyDto companyById(String companyId) throws SQLException {
+        try {
+            List<Company> comObj = companyRepo.getCompany(companyId);
+            List<CompanyResponseDto> companyResponseDto = new ArrayList<>();
+
+            for (Company c : comObj) {
+                companyResponseDto.add(
+                        new CompanyResponseDto(
+                                c.getId(),
+                                c.getCompanyCode(),
+                                c.getCompanyName(),
+                                c.getComAddressOne(),
+                                c.getComAddressTwo(),
+                                c.getComAddressThree(),
+                                c.getBrNumber()
+                        )
+                );
+            }
+            return new PaginatedResponseCompanyDto(
+                    1L,
+                    companyResponseDto
+            );
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't find any data for provided ID...!");
+        }
+    }
+
+    @Override
     public CommonResponseDto updateCompany(RequestRegistryDto dto, String companyId) {
         try {
             Company companyObj = companyRepo.getById(companyId);

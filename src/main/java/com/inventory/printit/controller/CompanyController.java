@@ -69,4 +69,15 @@ public class CompanyController {
                 HttpStatus.CREATED
         );
     }
+
+    @GetMapping("{companyCode}")
+    public ResponseEntity<StandardResponse> getCourse(@PathVariable String companyCode)throws SQLException {
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        200,
+                        "Company Details",
+                        companyService.companyById(companyCode)),
+                HttpStatus.OK
+        );
+    }
 }
