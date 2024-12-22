@@ -3,11 +3,8 @@ package com.inventory.printit.service.impl;
 import com.inventory.printit.dto.WarehouseDto;
 import com.inventory.printit.dto.requestdto.RequestRegistryDto;
 import com.inventory.printit.dto.responsedto.CommonResponseDto;
-import com.inventory.printit.dto.responsedto.CompanyResponseDto;
 import com.inventory.printit.dto.responsedto.WarehouseResponseDto;
-import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseCompanyDto;
 import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseWarehouseDto;
-import com.inventory.printit.entity.Company;
 import com.inventory.printit.entity.Warehouse;
 import com.inventory.printit.exception.EntryNotFoundException;
 import com.inventory.printit.repo.WarehouseRepository;
@@ -103,6 +100,31 @@ public class WarehouseServiceImpl implements WarehouseService {
             );
         }catch (Exception e){
             throw new EntryNotFoundException("Can't find any data...!");
+        }
+    }
+
+    @Override
+    public PaginatedResponseWarehouseDto warehouseById(String warehouseCode) throws SQLException {
+        try {
+            List<Warehouse> whrObj = warehouseRepo.getWarehouse(warehouseCode);
+            List<WarehouseResponseDto> warehouseResponseDto = new ArrayList<>();
+
+            for (Warehouse w : whrObj) {
+                warehouseResponseDto.add(
+                        new WarehouseResponseDto(
+                                w.getId(),
+                                w.getWarehouseCode(),
+                                w.getWarehouseName(),
+                                w.getWarehouseLocation()
+                        )
+                );
+            }
+            return new PaginatedResponseWarehouseDto(
+                    1L,
+                    warehouseResponseDto
+            );
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't find any data for provided ID...!");
         }
     }
 }
