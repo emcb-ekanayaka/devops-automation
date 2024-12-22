@@ -8,7 +8,8 @@ import java.sql.SQLException;
 
 public interface CompanyService {
     CommonResponseDto saveCompany(RequestRegistryDto dto);
-    PaginatedResponseCompanyDto allCompany() throws SQLException;
     CommonResponseDto updateCompany(RequestRegistryDto dto, String companyId);
     CommonResponseDto removeCompany(String companyId);
+    PaginatedResponseCompanyDto allCompany() throws SQLException;
+    PaginatedResponseCompanyDto companyById(String companyId) throws SQLException;
 }
