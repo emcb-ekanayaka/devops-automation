@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface CompanyMapper {
 
     Company dtoToCompanyEntity(CompanyDto companyDto);
+    CompanyDto toCompanyDto(Company company);
 }
