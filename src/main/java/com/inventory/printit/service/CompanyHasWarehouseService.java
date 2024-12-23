@@ -6,4 +6,5 @@ import com.inventory.printit.dto.responsedto.CommonResponseDto;
 public interface CompanyHasWarehouseService {
 
     CommonResponseDto saveCompanyHasWarehouse(RequestRegistryDto dto);
+    CommonResponseDto updateCompanyHasWarehouse(RequestRegistryDto dto, Integer companyHasWarehouseId);
 }

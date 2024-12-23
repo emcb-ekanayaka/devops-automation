@@ -73,4 +73,23 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
             return new CommonResponseDto(400, "Student - Course  Not Found! or already exist",0, new ArrayList<>());
         }
     }
+
+    @Override
+    public CommonResponseDto updateCompanyHasWarehouse(RequestRegistryDto dto, Integer companyHasWarehouseId) {
+        try {
+
+            CompanyHasWarehouse companyHasWarehouseObj = companyHasWarehouseRepository.findByComWHRID(companyHasWarehouseId);
+            Optional<Company> student = companyRepository.findCompanyByName(dto.getCompanyName());
+            Optional<Warehouse> course = warehouseRepository.findWarehouseByName(dto.getWarehouseName());
+
+            companyHasWarehouseObj.setCompanyId(student.get());
+            companyHasWarehouseObj.setWarehouseId(course.get());
+
+            companyHasWarehouseRepository.save(companyHasWarehouseObj);
+
+            return new CommonResponseDto(201, "Company - Warehouse Updated!", companyHasWarehouseObj.getId(), new ArrayList<>());
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+        }
+    }
 }

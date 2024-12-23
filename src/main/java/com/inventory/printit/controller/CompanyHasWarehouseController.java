@@ -30,4 +30,17 @@ public class CompanyHasWarehouseController {
                 HttpStatus.CREATED
         );
     }
+
+    @PutMapping("{companyHasWarehouseId}")
+    public ResponseEntity<StandardResponse> updateCompanyHasWarehouse(@RequestBody RequestRegistryDto data, @PathVariable Integer companyHasWarehouseId){
+        CommonResponseDto responseData = companyHasWarehouseService.updateCompanyHasWarehouse(data,companyHasWarehouseId);
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        responseData.getCode(),
+                        responseData.getMessage(),
+                        responseData.getData()
+                ),
+                HttpStatus.CREATED
+        );
+    }
 }
