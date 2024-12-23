@@ -15,4 +15,8 @@ public interface CompanyHasWarehouseRepository extends JpaRepository<CompanyHasW
     @Query(value = "SELECT * FROM student_has_course WHERE company_id=?1 AND warehouse_id=?2", nativeQuery = true)
     Optional<CompanyHasWarehouse> findCompanyAndWarehouse(String companyId, String warehouseId);
 
+    @Query(value = "SELECT * FROM student_has_course WHERE id=?1", nativeQuery = true)
+    CompanyHasWarehouse findByComWHRID(Integer companyHasWarehouseId);
+
+
 }
