@@ -92,4 +92,16 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
             throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
         }
     }
+
+    @Override
+    public CommonResponseDto removeCompanyHasWarehouse(Integer companyHasWarehouseId) {
+        Optional<CompanyHasWarehouse> companyHasWarehouse = companyHasWarehouseRepository.findById(companyHasWarehouseId);
+
+        if (companyHasWarehouse.isPresent()) {
+            companyHasWarehouseRepository.delete(companyHasWarehouse.get());
+            return new CommonResponseDto(201, "Company - Warehouse was deleted! ", true, new ArrayList<>());
+        } else {
+            throw new EntryNotFoundException("Can't find any Company - Warehouse...!");
+        }
+    }
 }

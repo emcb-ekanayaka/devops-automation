@@ -7,4 +7,6 @@ public interface CompanyHasWarehouseService {
 
     CommonResponseDto saveCompanyHasWarehouse(RequestRegistryDto dto);
     CommonResponseDto updateCompanyHasWarehouse(RequestRegistryDto dto, Integer companyHasWarehouseId);
+    CommonResponseDto removeCompanyHasWarehouse(Integer companyHasWarehouseId);
+
 }
