@@ -19,7 +19,7 @@ public interface CompanyHasWarehouseRepository extends JpaRepository<CompanyHasW
     @Query(value = "SELECT * FROM company_has_warehouse WHERE id=?1", nativeQuery = true)
     CompanyHasWarehouse findByComWHRID(Integer companyHasWarehouseId);
 
-    @Query(value = "SELECT * FROM student_has_course WHERE id=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM company_has_warehouse WHERE id=?1", nativeQuery = true)
     List<CompanyHasWarehouse> findByCW(Integer companyHasWarehouseId);
 
 }
