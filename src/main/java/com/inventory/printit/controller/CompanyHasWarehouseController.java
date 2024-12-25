@@ -69,4 +69,15 @@ public class CompanyHasWarehouseController {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("{companyHasWarehouseId}")
+    public ResponseEntity<StandardResponse> getStudentHasCourse(@PathVariable Integer companyHasWarehouseId)throws SQLException {
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        200,
+                        "Company has warehouse Details",
+                        companyHasWarehouseService.companyHasWarehouseById(companyHasWarehouseId)),
+                HttpStatus.OK
+        );
+    }
 }

@@ -12,5 +12,6 @@ public interface CompanyHasWarehouseService {
     CommonResponseDto updateCompanyHasWarehouse(RequestRegistryDto dto, Integer companyHasWarehouseId);
     CommonResponseDto removeCompanyHasWarehouse(Integer companyHasWarehouseId);
     PaginatedResponseComHasWhrDto allCompanyHasWarehouses() throws SQLException;
+    PaginatedResponseComHasWhrDto companyHasWarehouseById(Integer companyHasWarehouseId) throws SQLException;
 
 }
