@@ -22,4 +22,10 @@ public interface CompanyHasWarehouseRepository extends JpaRepository<CompanyHasW
     @Query(value = "SELECT * FROM company_has_warehouse WHERE id=?1", nativeQuery = true)
     List<CompanyHasWarehouse> findByCW(Integer companyHasWarehouseId);
 
+    @Query(value = "SELECT * FROM company_has_warehouse WHERE company_id=:companyId", nativeQuery = true)
+    List<CompanyHasWarehouse> getCompany(@Param("companyId") String companyId);
+
+    @Query(value = "SELECT * FROM company_has_warehouse WHERE warehouse_id=:warehouseId", nativeQuery = true)
+    List<CompanyHasWarehouse> getWarehouse(@Param("warehouseId") String warehouseId);
+
 }
