@@ -133,4 +133,28 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
             throw new EntryNotFoundException("Can't find any data...!");
         }
     }
+
+    @Override
+    public PaginatedResponseComHasWhrDto companyHasWarehouseById(Integer companyHasWarehouseId) throws SQLException {
+        try {
+            List<CompanyHasWarehouse> companyHasWarehousesObj = companyHasWarehouseRepository.findByCW(companyHasWarehouseId);
+            List<CompanyHasWarehouseResponseDto> companyHasWarehouseResponseDto = new ArrayList<>();
+
+            for (CompanyHasWarehouse cw : companyHasWarehousesObj) {
+                companyHasWarehouseResponseDto.add(
+                        new CompanyHasWarehouseResponseDto(
+                                cw.getId(),
+                                companyMapper.toCompanyDto(cw.getCompanyId()),
+                                warehouseMapper.toWarehouseDto(cw.getWarehouseId())
+                        )
+                );
+            }
+            return new PaginatedResponseComHasWhrDto(
+                    companyHasWarehouseRepository.count(),
+                    companyHasWarehouseResponseDto
+            );
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't find any data for provided ID...!");
+        }
+    }
 }
