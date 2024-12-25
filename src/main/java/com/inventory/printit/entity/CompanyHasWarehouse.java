@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "student_has_course")
+@Table(name = "company_has_warehouse")
 public class CompanyHasWarehouse {
 
     @Id
