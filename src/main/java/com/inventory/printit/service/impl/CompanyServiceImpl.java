@@ -6,7 +6,9 @@ import com.inventory.printit.dto.responsedto.CommonResponseDto;
 import com.inventory.printit.dto.responsedto.CompanyResponseDto;
 import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseCompanyDto;
 import com.inventory.printit.entity.Company;
+import com.inventory.printit.entity.CompanyHasWarehouse;
 import com.inventory.printit.exception.EntryNotFoundException;
+import com.inventory.printit.repo.CompanyHasWarehouseRepository;
 import com.inventory.printit.repo.CompanyRepository;
 import com.inventory.printit.service.CompanyService;
 import com.inventory.printit.utill.Generator;
@@ -32,6 +34,9 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Autowired
     private CompanyRepository companyRepo;
+
+    @Autowired
+    private CompanyHasWarehouseRepository companyHasWarehouseRepository;
 
     @Override
     public CommonResponseDto saveCompany(RequestRegistryDto dto) {
@@ -134,6 +139,14 @@ public class CompanyServiceImpl implements CompanyService{
     @Override
     public CommonResponseDto removeCompany(String companyId) {
         Optional<Company> company = companyRepo.findById(companyId);
+        List<CompanyHasWarehouse> companyHasWarehouses = companyHasWarehouseRepository.getCompany(companyId);
+
+        if(!companyHasWarehouses.isEmpty()){
+            for(CompanyHasWarehouse c : companyHasWarehouses){
+                companyHasWarehouseRepository.deleteById(c.getId());
+            }
+        }
+
         if (company.isPresent()) {
             companyRepo.delete(company.get());
             return new CommonResponseDto(201, "Company was deleted!", true, new ArrayList<>());

@@ -5,8 +5,10 @@ import com.inventory.printit.dto.requestdto.RequestRegistryDto;
 import com.inventory.printit.dto.responsedto.CommonResponseDto;
 import com.inventory.printit.dto.responsedto.WarehouseResponseDto;
 import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseWarehouseDto;
+import com.inventory.printit.entity.CompanyHasWarehouse;
 import com.inventory.printit.entity.Warehouse;
 import com.inventory.printit.exception.EntryNotFoundException;
+import com.inventory.printit.repo.CompanyHasWarehouseRepository;
 import com.inventory.printit.repo.WarehouseRepository;
 import com.inventory.printit.service.WarehouseService;
 import com.inventory.printit.utill.Generator;
@@ -32,6 +34,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Autowired
     private WarehouseRepository warehouseRepo;
+
+    @Autowired
+    private CompanyHasWarehouseRepository companyHasWarehouseRepository;
 
     @Override
     public CommonResponseDto saveWarehouse(RequestRegistryDto dto) {
@@ -70,6 +75,14 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public CommonResponseDto removeWarehouse(String warehouseId) {
         Optional<Warehouse> warehouse = warehouseRepo.findById(warehouseId);
+        List<CompanyHasWarehouse> companyHasWarehouses = companyHasWarehouseRepository.getWarehouse(warehouseId);
+
+        if(!companyHasWarehouses.isEmpty()){
+            for(CompanyHasWarehouse c : companyHasWarehouses){
+                companyHasWarehouseRepository.deleteById(c.getId());
+            }
+        }
+
         if (warehouse.isPresent()) {
             warehouseRepo.delete(warehouse.get());
             return new CommonResponseDto(201, "Warehouse was deleted!", true, new ArrayList<>());
