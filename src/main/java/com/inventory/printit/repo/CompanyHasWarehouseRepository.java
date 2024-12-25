@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CompanyHasWarehouseRepository extends JpaRepository<CompanyHasWarehouse, Integer> {
 
-    @Query(value = "SELECT * FROM student_has_course WHERE company_id=?1 AND warehouse_id=?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM company_has_warehouse WHERE company_id=?1 AND warehouse_id=?2", nativeQuery = true)
     Optional<CompanyHasWarehouse> findCompanyAndWarehouse(String companyId, String warehouseId);
 
 }
