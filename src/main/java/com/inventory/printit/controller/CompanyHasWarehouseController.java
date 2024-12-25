@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/companyhaswarehouse")
@@ -54,6 +56,17 @@ public class CompanyHasWarehouseController {
                         responseData.getData()
                 ),
                 HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping
+    public ResponseEntity<StandardResponse> getAllCompanyHasWarehouse()throws SQLException {
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        200,
+                        "Company has warehouse List",
+                        companyHasWarehouseService.allCompanyHasWarehouses()),
+                HttpStatus.OK
         );
     }
 }
