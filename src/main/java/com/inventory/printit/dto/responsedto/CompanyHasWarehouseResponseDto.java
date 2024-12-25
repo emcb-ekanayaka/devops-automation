@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyHasWarehouseResponseDto {
-
     private Integer id;
     private CompanyDto companyId;
     private WarehouseDto warehouseId;
