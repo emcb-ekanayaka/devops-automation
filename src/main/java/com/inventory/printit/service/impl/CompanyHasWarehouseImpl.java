@@ -3,6 +3,8 @@ package com.inventory.printit.service.impl;
 import com.inventory.printit.dto.CompanyHasWarehouseDto;
 import com.inventory.printit.dto.requestdto.RequestRegistryDto;
 import com.inventory.printit.dto.responsedto.CommonResponseDto;
+import com.inventory.printit.dto.responsedto.CompanyHasWarehouseResponseDto;
+import com.inventory.printit.dto.responsedto.paginated.PaginatedResponseComHasWhrDto;
 import com.inventory.printit.entity.Company;
 import com.inventory.printit.entity.CompanyHasWarehouse;
 import com.inventory.printit.entity.Warehouse;
@@ -18,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,7 +63,7 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
             try {
                 CompanyHasWarehouseDto companyHasWarehouseDto = new CompanyHasWarehouseDto(
                         companyMapper.toCompanyDto(company.get()),
-                        warehouseMapper.toCompanyDto(warehouse.get())
+                        warehouseMapper.toWarehouseDto(warehouse.get())
                 );
 
                 companyHasWarehouseRepository.save(companyHasWarehouseMapper.dtoToCompanyHasWarehouseEntity(companyHasWarehouseDto));
@@ -102,6 +106,31 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
             return new CommonResponseDto(201, "Company - Warehouse was deleted! ", true, new ArrayList<>());
         } else {
             throw new EntryNotFoundException("Can't find any Company - Warehouse...!");
+        }
+    }
+
+    @Override
+    public PaginatedResponseComHasWhrDto allCompanyHasWarehouses() throws SQLException {
+        try {
+            List<CompanyHasWarehouse> studentHasCompanyObj = companyHasWarehouseRepository.findAll();
+            List<CompanyHasWarehouseResponseDto> companyHasWarehouseResponseDto = new ArrayList<>();
+
+            for (CompanyHasWarehouse cw : studentHasCompanyObj) {
+                companyHasWarehouseResponseDto.add(
+                        new CompanyHasWarehouseResponseDto(
+                                cw.getId(),
+                                companyMapper.toCompanyDto(cw.getCompanyId()),
+                                warehouseMapper.toWarehouseDto(cw.getWarehouseId())
+                        )
+                );
+            }
+
+            return new PaginatedResponseComHasWhrDto(
+                    companyHasWarehouseRepository.count(),
+                    companyHasWarehouseResponseDto
+            );
+        }catch (Exception e){
+            throw new EntryNotFoundException("Can't find any data...!");
         }
     }
 }

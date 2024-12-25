@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Mapper(componentModel = "spring")
 public interface WarehouseMapper {
     Warehouse dtoToWarehouseEntity(WarehouseDto warehouseDto);
-    WarehouseDto toCompanyDto(Warehouse warehouse);
+    WarehouseDto toWarehouseDto(Warehouse warehouse);
 }
