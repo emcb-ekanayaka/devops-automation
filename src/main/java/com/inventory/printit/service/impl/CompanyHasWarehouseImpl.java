@@ -59,7 +59,7 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
             try {
                 CompanyHasWarehouseDto companyHasWarehouseDto = new CompanyHasWarehouseDto(
                         companyMapper.toCompanyDto(company.get()),
-                        warehouseMapper.toCompanyDto(warehouse.get())
+                        warehouseMapper.toWarehouseDto(warehouse.get())
                 );
 
                 companyHasWarehouseRepository.save(companyHasWarehouseMapper.dtoToCompanyHasWarehouseEntity(companyHasWarehouseDto));

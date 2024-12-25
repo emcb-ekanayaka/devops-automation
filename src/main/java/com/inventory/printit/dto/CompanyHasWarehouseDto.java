@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyHasWarehouseDto {
-
     private CompanyDto companyId;
     private WarehouseDto warehouseId;
 }
