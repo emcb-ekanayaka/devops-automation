@@ -59,7 +59,6 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
         Optional<CompanyHasWarehouse> companyAndWarehouse = companyHasWarehouseRepository.findCompanyAndWarehouse(company.get().getId(),warehouse.get().getId());
 
         if (company.isPresent() && warehouse.isPresent() && !companyAndWarehouse.isPresent()){
-
             try {
                 CompanyHasWarehouseDto companyHasWarehouseDto = new CompanyHasWarehouseDto(
                         companyMapper.toCompanyDto(company.get()),
@@ -74,7 +73,7 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
             }
 
         }else {
-            return new CommonResponseDto(400, "Student - Course  Not Found! or already exist",0, new ArrayList<>());
+            return new CommonResponseDto(400, "Company - Warehouse  Not Found! or already exist",0, new ArrayList<>());
         }
     }
 

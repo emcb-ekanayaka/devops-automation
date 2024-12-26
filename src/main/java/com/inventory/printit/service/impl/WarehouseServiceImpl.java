@@ -40,21 +40,26 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public CommonResponseDto saveWarehouse(RequestRegistryDto dto) {
-        System.out.println(dto);
-        try {
-            String warehouseCode = "WH-C" + "-" + generator.generateFourNumbers();
-            String whrId =  generator.generateFourNumbers();
-            WarehouseDto warehouseDto = new WarehouseDto(
-                    whrId,
-                    warehouseCode,
-                    dto.getWarehouseName(),
-                    dto.getWarehouseLocation()
-            );
-            warehouseRepo.save(warehouseMapper.dtoToWarehouseEntity(warehouseDto));
+        Optional<Warehouse> warehouse = warehouseRepo.findWarehouseByName(dto.getWarehouseName());
 
-            return new CommonResponseDto(201, "Warehouse  saved!", warehouseDto.getWarehouseCode(), new ArrayList<>());
-        }catch (Exception e){
-            throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+        if(!warehouse.isPresent()){
+            try {
+                String warehouseCode = "WH-C" + "-" + generator.generateFourNumbers();
+                String whrId =  generator.generateFourNumbers();
+                WarehouseDto warehouseDto = new WarehouseDto(
+                        whrId,
+                        warehouseCode,
+                        dto.getWarehouseName(),
+                        dto.getWarehouseLocation()
+                );
+                warehouseRepo.save(warehouseMapper.dtoToWarehouseEntity(warehouseDto));
+
+                return new CommonResponseDto(201, "Warehouse  saved!", warehouseDto.getWarehouseCode(), new ArrayList<>());
+            }catch (Exception e){
+                throw new EntryNotFoundException("Can't Save because of this Error -->  " + e);
+            }
+        }else {
+            return new CommonResponseDto(400, "Warehouse Not Found! or already exist",0, new ArrayList<>());
         }
     }
 
