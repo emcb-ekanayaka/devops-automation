@@ -21,8 +21,6 @@ public class CompanyController {
 
     @PostMapping
     public ResponseEntity<StandardResponse> savedCompany(@RequestBody RequestRegistryDto data){
-        System.out.println("Data : "+data);
-        System.out.println("Data : "+data);
         CommonResponseDto responseData = companyService.saveCompany(data);
         return new ResponseEntity<>(
                 new StandardResponse(
