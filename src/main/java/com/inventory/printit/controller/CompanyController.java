@@ -34,7 +34,7 @@ public class CompanyController {
 
     @GetMapping
     public ResponseEntity<StandardResponse> getAllCourse()throws SQLException {
-        System.out.println("Data");
+
         return new ResponseEntity<>(
                 new StandardResponse(
                         200,
