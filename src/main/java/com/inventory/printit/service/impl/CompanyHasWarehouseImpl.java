@@ -51,7 +51,7 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
 
     @Override
     public CommonResponseDto saveCompanyHasWarehouse(RequestRegistryDto dto) {
-
+        System.out.println("Hello");
         Optional<Company> company = companyRepository.findCompanyByName(dto.getCompanyName());
         Optional<Warehouse> warehouse = warehouseRepository.findWarehouseByName(dto.getWarehouseName());
         System.out.println("hello");
