@@ -54,7 +54,7 @@ public class CompanyHasWarehouseImpl implements CompanyHasWarehouseService {
 
         Optional<Company> company = companyRepository.findCompanyByName(dto.getCompanyName());
         Optional<Warehouse> warehouse = warehouseRepository.findWarehouseByName(dto.getWarehouseName());
-        System.out.println("Hello");
+        System.out.println("hello");
         System.out.println(company.get().getId());
         System.out.println(warehouse.get().getId());
         Optional<CompanyHasWarehouse> companyAndWarehouse = companyHasWarehouseRepository.findCompanyAndWarehouse(company.get().getId(),warehouse.get().getId());

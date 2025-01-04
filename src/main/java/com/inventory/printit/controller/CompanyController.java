@@ -30,6 +30,7 @@ public class CompanyController {
                 ),
                 HttpStatus.CREATED
         );
+
     }
 
     @GetMapping
