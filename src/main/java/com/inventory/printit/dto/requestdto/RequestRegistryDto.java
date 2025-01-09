@@ -1,4 +1,5 @@
 package com.inventory.printit.dto.requestdto;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -16,4 +17,8 @@ public class RequestRegistryDto {
 
     private String warehouseName;
     private String warehouseLocation;
+
+    private String firstName;
+    private String lastName;
+    private String address;
 }
